@@ -1,0 +1,545 @@
+/* ========================================
+   VERIDIAN CUSTOM FONTS
+   ======================================== */
+@font-face {
+    font-family: 'Migra';
+    src: url('./fonts:/migra-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('./fonts:/TT_Fors_Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('./fonts:/TT_Fors_Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Holiday';
+    src: url('./fonts:/holiday.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'TT Fors', sans-serif;
+    background-color: #dad7cd;
+    color: #1e2a1e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   VERIDIAN FONT CLASSES
+   ======================================== */
+.migra {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+}
+
+.tt-fors {
+    font-family: 'TT Fors', sans-serif;
+}
+
+.tt-fors-bold {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 700;
+}
+
+.holiday {
+    font-family: 'Holiday', cursive;
+    font-style: italic;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.navbar {
+    background: #3a5a40;
+    padding: 1rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center; 
+    gap: 0.8rem;
+}
+
+.logo-svg {
+    height: 40px;
+    width: 40px;
+    flex-shrink: 0;
+    display: block;
+}
+
+.logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    line-height: 1.2; 
+}
+
+.logo-migra {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #dad7cd;
+    letter-spacing: 1px;
+}
+
+.logo-slogan {
+    font-family: 'Holiday', cursive;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: #dad7cd;
+    margin-left: 0.3rem;
+    opacity: 0.8;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+    color: #dad7cd;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #a3b18a;
+}
+
+/* ========================================
+   HERO COLLAGE
+   ======================================== */
+.hero-collage {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.collage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    width: 100%;
+}
+
+.collage-item {
+    overflow: hidden;
+    height: 400px;
+    flex-shrink: 0;
+}
+
+.collage-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.collage-img:hover {
+    transform: scale(1.03);
+}
+
+#app {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+    flex-shrink: 0;  /* ← prevents it from shrinking */
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+}
+
+.hero-divider {
+    width: 80px;
+    height: 3px;
+    background: #588157;
+    margin: 1.5rem auto 2rem;
+    border-radius: 2px;
+}
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+#app {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+}
+
+.page {
+    display: none;
+    animation: fadeUp 0.3s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-title {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #3a5a40;
+    margin-bottom: 0.25rem;
+}
+
+.page-sub {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    color: #588157;
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   HOME PAGE
+   ======================================== */
+.hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+}
+
+.hero-title {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #3a5a40;
+}
+
+.hero-title .highlight {
+    color: #588157;
+    font-style: italic;
+}
+
+.hero-sub {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: #588157;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.home-card {
+    background: white;
+    border-radius: 16px;
+    padding: 3.2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(58, 90, 64, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(58, 90, 64, 0.12);
+}
+
+.home-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.home-card h3 {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    color: #3a5a40;
+}
+
+.home-card p {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    color: #588157;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   IDENTIFY PAGE
+   ======================================== */
+.upload-zone {
+    border: 3px dashed #a3b18a;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    background: white;
+}
+
+.upload-zone:hover {
+    background: #f5f3ed;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.upload-zone p {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+}
+
+.upload-hint {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #a3b18a;
+}
+
+.identify-result {
+    margin-top: 2rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(58, 90, 64, 0.08);
+}
+
+.identify-result h3 {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    color: #3a5a40;
+    margin-bottom: 1rem;
+}
+
+.result-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.result-content img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #dad7cd;
+}
+
+.result-details {
+    flex: 1;
+}
+
+.result-details p {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn-primary {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 700;
+    background: #588157;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #3a5a40;
+}
+
+.btn-secondary {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 700;
+    background: transparent;
+    color: #588157;
+    border: 2px solid #588157;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #588157;
+    color: white;
+}
+
+/* ========================================
+   GARDEN & RECOMMENDATIONS
+   ======================================== */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 16px;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+}
+
+/* ========================================
+   PROFILE
+   ======================================== */
+.profile-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.profile-avatar {
+    font-size: 4rem;
+}
+
+.profile-card h3 {
+    font-family: 'Migra', serif;
+    font-weight: 700;
+    color: #3a5a40;
+}
+
+.profile-card p {
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    color: #588157;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    background: #3a5a40;
+    color: #dad7cd;
+    text-align: center;
+    padding: 1.5rem;
+    font-family: 'TT Fors', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-top: 2rem;
+}
+
+/* ========================================
+   UTILITY
+   ======================================== */
+.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .home-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .result-content img {
+        width: 100%;
+        height: auto;
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .collage-item {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .collage-item {
+        height: 150px;
+    }
+}
