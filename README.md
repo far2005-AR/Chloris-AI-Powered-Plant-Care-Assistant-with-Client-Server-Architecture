@@ -70,7 +70,7 @@ AI-powered plant care assistant with client-server architecture.
 
 ---
 
-## 📅 Course
+## Course
 
-ITEC 3230 — Client-Server Systems
+AP/ITEC 4020 — Internet Client-Server Systems
 Summer 2026
