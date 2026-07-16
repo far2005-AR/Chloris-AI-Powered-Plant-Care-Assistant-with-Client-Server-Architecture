@@ -57,7 +57,7 @@ AI-powered plant care assistant with client-server architecture.
 
 - **Fatimah Abdul Razik (220283727)** — Backend & Frontend
 - **Kofoworola Oladipupo (220152062)** — AI Integration
-- **Karim Karam (220473211)** — AI Integration
+- **Karim Karam (220473211)** — Database Creation and AI 
 
 ---
 
