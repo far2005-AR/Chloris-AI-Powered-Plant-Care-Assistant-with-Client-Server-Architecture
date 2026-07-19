@@ -78,7 +78,7 @@
         <!-- IDENTIFY PAGE -->
         <section id="page-identify" class="page">
             <h2 class="page-title">Identify a Plant</h2>
-            <p class="page-sub">Upload a photo and Chlora will identify it instantly.</p>
+            <p class="page-sub">Upload a photo and Chloris will identify it instantly!</p>
 
             <div class="upload-zone" id="uploadZone">
                 <div class="upload-content">
@@ -90,7 +90,7 @@
             </div>
 
             <div id="identifyResult" class="identify-result hidden">
-                <h3>🌿 Identification Result</h3>
+                <h3>🌿 Your Identification Result</h3>
                 <div class="result-content">
                     <img id="resultImage" src="" alt="Uploaded plant">
                     <div class="result-details">
@@ -108,12 +108,7 @@
             <h2 class="page-title">My Garden</h2>
             <p class="page-sub">Plants you've saved and are caring for.</p>
             <div id="gardenContainer">
-                <div class="empty-state">
-                    <span class="empty-icon">🌱</span>
-                    <p>Your garden is empty.</p>
-                    <button class="btn-secondary" onclick="navigateTo('identify')">Identify a plant to get started</button>
-                </div>
-                <!-- dynamic garden cards will go here -->
+                <!-- populated by script.js -->
             </div>
         </section>
 
@@ -122,23 +117,30 @@
             <h2 class="page-title">Smart Recommendations</h2>
             <p class="page-sub">AI-powered suggestions based on your garden.</p>
             <div id="recommendationsContainer">
-                <div class="empty-state">
-                    <span class="empty-icon">✨</span>
-                    <p>Add plants to your garden to get personalized recommendations.</p>
-                </div>
-                <!-- dynamic recommendation cards will go here -->
+                <!--  populated by script.js -->
             </div>
         </section>
 
         <!-- PROFILE PAGE -->
         <section id="page-profile" class="page">
             <h2 class="page-title">Profile</h2>
-            <p class="page-sub">Manage your Veridian account.</p>
+            <p class="page-sub">Manage your Chloris account.</p>
             <div class="profile-card">
                 <div class="profile-avatar">👤</div>
                 <h3 id="profileName">Guest</h3>
                 <p id="profileEmail">Not signed in</p>
-                <button class="btn-primary" id="authBtn">Sign In / Sign Up</button>
+
+                <!-- Sign In / Sign Up Form -->
+                <div id="authForm" style="display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem;">
+                    <input type="email" id="authEmail" placeholder="Email" style="padding: 0.6rem; border-radius: 8px; border: 1px solid #a3b18a;">
+                    <input type="password" id="authPassword" placeholder="Password" style="padding: 0.6rem; border-radius: 8px; border: 1px solid #a3b18a;">
+                    <div style="display: flex; gap: 0.8rem; justify-content: center;">
+                        <button class="btn-primary" onclick="handleLogin()">Log In</button>
+                        <button class="btn-secondary" onclick="handleSignup()">Sign Up</button>
+                    </div>
+                </div>
+
+                <button class="btn-secondary" id="authBtn" style="margin-top: 1rem;">Sign In / Sign Up</button>
             </div>
         </section>
 
