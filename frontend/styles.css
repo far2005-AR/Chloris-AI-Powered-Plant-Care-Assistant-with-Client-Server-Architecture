@@ -3,28 +3,28 @@
    ======================================== */
 @font-face {
     font-family: 'Migra';
-    src: url('./fonts:/migra-bold.woff2') format('woff2');
+    src: url('fonts/migra-bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'TT Fors';
-    src: url('./fonts:/TT_Fors_Regular.woff2') format('woff2');
+    src: url('fonts/TT_Fors_Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'TT Fors';
-    src: url('./fonts:/TT_Fors_Bold.woff2') format('woff2');
+    src: url('fonts/TT_Fors_Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Holiday';
-    src: url('./fonts:/holiday.woff2') format('woff2');
+    src: url('fonts/holiday.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
