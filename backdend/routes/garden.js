@@ -37,20 +37,32 @@ router.get('/', verifyToken, async (req, res) => {
 // add plant to garden
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const { plantName } = req.body;
+        const { plantId, plantName, careInfo } = req.body;
+        let plant = null;
 
-        // find or create plant in database
-        let plant = await Plant.findByName(plantName);
-        if (!plant) {
-            // add plant to database with care info
-            const result = await Plant.create({ 
-                name: plantName,
-                ...req.body.careInfo
-            });
-            plant = result;
+        if (plantId) {
+            plant = await Plant.findById(plantId);
+            if (!plant) {
+                plant = await Plant.findByName(plantId);
+            }
         }
 
-        // add plant ID to user's garden
+        if (!plant && plantName) {
+            plant = await Plant.findByName(plantName);
+        }
+
+        if (!plant && !plantName && !plantId) {
+            return res.status(400).json({ error: 'No plant identifier provided' });
+        }
+
+        if (!plant) {
+            const name = plantName || plantId;
+            plant = await Plant.create({
+                name,
+                careInfo: careInfo || {}
+            });
+        }
+
         await User.updateGarden(req.user.userId, plant._id.toString());
 
         res.json({ message: 'Plant added to garden', plant });

@@ -158,18 +158,32 @@ function updateProfileUI() {
 }
 
 // ===== IDENTIFY PLANT =====
-async function identifyPlant(file) {
-    const formData = new FormData();
-    formData.append('image', file);
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
 
+async function identifyPlant(file) {
     try {
+        const imageBase64 = await fileToBase64(file);
+
         const res = await fetch(`${API_BASE}/identify`, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getToken()}`
             },
-            body: formData
+            body: JSON.stringify({
+                imageBase64,
+                fileName: file.name,
+                mimeType: file.type || 'image/jpeg'
+            })
         });
+
         const data = await res.json();
         if (res.ok) {
             document.getElementById('identifyResult').classList.remove('hidden');
@@ -177,7 +191,6 @@ async function identifyPlant(file) {
             document.getElementById('plantName').textContent = data.name || 'Unknown';
             document.getElementById('plantScientific').textContent = data.scientific || '—';
             document.getElementById('plantConfidence').textContent = data.confidence ? data.confidence + '%' : '—';
-            // Save plant data for saving to garden
             window.lastIdentifiedPlant = data;
         } else {
             alert('❌ Identification failed: ' + data.error);
@@ -249,7 +262,7 @@ async function renderGarden() {
             container.innerHTML = data.garden.map(plant => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        <img src="${plant.image || 'assets/plant-placeholder.png'}" alt="${plant.name}" class="profile-event-img">
+                        ${plant.image ? `<img src="${plant.image}" alt="${plant.name}" class="profile-event-img">` : ''}
                         <div class="profile-event-details">
                             <h4>${plant.name}</h4>
                             <p>🌿 ${plant.scientific || '—'} • ${plant.care?.light || 'Bright indirect light'}</p>
@@ -318,7 +331,7 @@ async function renderRecommendations() {
             container.innerHTML = data.recommendations.map(rec => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        <img src="${rec.image || 'assets/plant-placeholder.png'}" alt="${rec.name}" class="profile-event-img">
+                        ${rec.image ? `<img src="${rec.image}" alt="${rec.name}" class="profile-event-img">` : ''}
                         <div class="profile-event-details">
                             <h4>${rec.name}</h4>
                             <p>🌿 ${rec.scientific || '—'}</p>
