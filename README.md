@@ -4,7 +4,7 @@
 AI-powered plant care assistant with client-server architecture.
 ---
 
-## 📁 Project Structure
+## Project Structure
 ├── frontend/ # HTML, CSS, JS (client-side UI)
 ├── backend/ # Node.js + Express server (API)
 └── README.md
