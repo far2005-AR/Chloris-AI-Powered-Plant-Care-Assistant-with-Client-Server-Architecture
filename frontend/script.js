@@ -158,32 +158,18 @@ function updateProfileUI() {
 }
 
 // ===== IDENTIFY PLANT =====
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
 async function identifyPlant(file) {
-    try {
-        const imageBase64 = await fileToBase64(file);
+    const formData = new FormData();
+    formData.append('image', file);
 
+    try {
         const res = await fetch(`${API_BASE}/identify`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getToken()}`
             },
-            body: JSON.stringify({
-                imageBase64,
-                fileName: file.name,
-                mimeType: file.type || 'image/jpeg'
-            })
+            body: formData
         });
-
         const data = await res.json();
         if (res.ok) {
             document.getElementById('identifyResult').classList.remove('hidden');
@@ -191,6 +177,7 @@ async function identifyPlant(file) {
             document.getElementById('plantName').textContent = data.name || 'Unknown';
             document.getElementById('plantScientific').textContent = data.scientific || '—';
             document.getElementById('plantConfidence').textContent = data.confidence ? data.confidence + '%' : '—';
+            // Save plant data for saving to garden
             window.lastIdentifiedPlant = data;
         } else {
             alert('❌ Identification failed: ' + data.error);
@@ -221,12 +208,17 @@ async function savePlant() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getToken()}`
             },
-            body: JSON.stringify({ plantId: plant._id || plant.name })
+            body: JSON.stringify({ 
+                plantName: plant.name,
+                scientific: plant.scientific || '',
+                careInfo: plant.care || {},
+                image: plant.image || null
+            })
         });
         const data = await res.json();
         if (res.ok) {
             alert('🌱 Plant saved to your garden!');
-            window.lastIdentifiedPlant = null;
+            window.lastIdentifiedPlant = data;
         } else {
             alert('❌ ' + data.error);
         }
@@ -262,7 +254,7 @@ async function renderGarden() {
             container.innerHTML = data.garden.map(plant => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        ${plant.image ? `<img src="${plant.image}" alt="${plant.name}" class="profile-event-img">` : ''}
+                        <img src="${plant.image || 'assets/plant-placeholder.png'}" alt="${plant.name}" class="profile-event-img">
                         <div class="profile-event-details">
                             <h4>${plant.name}</h4>
                             <p>🌿 ${plant.scientific || '—'} • ${plant.care?.light || 'Bright indirect light'}</p>
@@ -331,7 +323,7 @@ async function renderRecommendations() {
             container.innerHTML = data.recommendations.map(rec => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        ${rec.image ? `<img src="${rec.image}" alt="${rec.name}" class="profile-event-img">` : ''}
+                        <img src="${rec.image || 'assets/plant-placeholder.png'}" alt="${rec.name}" class="profile-event-img">
                         <div class="profile-event-details">
                             <h4>${rec.name}</h4>
                             <p>🌿 ${rec.scientific || '—'}</p>
