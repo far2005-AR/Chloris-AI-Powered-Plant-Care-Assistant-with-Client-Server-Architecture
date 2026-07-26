@@ -37,32 +37,37 @@ router.get('/', verifyToken, async (req, res) => {
 // add plant to garden
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const { plantId, plantName, careInfo } = req.body;
-        let plant = null;
+        console.log('📝 Add to garden request:', req.body);
+        const { plantName, careInfo } = req.body;
 
-        if (plantId) {
-            plant = await Plant.findById(plantId);
-            if (!plant) {
-                plant = await Plant.findByName(plantId);
-            }
+        if (!plantName) {
+            return res.status(400).json({ error: 'Plant name is required' });
         }
 
-        if (!plant && plantName) {
-            plant = await Plant.findByName(plantName);
-        }
-
-        if (!plant && !plantName && !plantId) {
-            return res.status(400).json({ error: 'No plant identifier provided' });
-        }
+        // find or create plant in database
+        let plant = await Plant.findByName(plantName);
+        console.log('🔍 Plant found:', plant);
 
         if (!plant) {
-            const name = plantName || plantId;
-            plant = await Plant.create({
-                name,
+            console.log('🌱 Creating new plant:', plantName);
+            const result = await Plant.create({ 
+                name: plantName,
                 careInfo: careInfo || {}
             });
+            console.log('📦 Create result:', result);
+            
+            // fetch the plant with _id
+            plant = await Plant.findById(result.insertedId);
+            console.log('🌱 Plant after fetch:', plant);
         }
 
+        if (!plant || !plant._id) {
+            console.error('❌ Plant has no _id:', plant);
+            return res.status(500).json({ error: 'Plant created but no ID found' });
+        }
+
+        // add plant ID to user's garden
+        console.log('💾 Adding plant to user garden:', req.user.userId, plant._id.toString());
         await User.updateGarden(req.user.userId, plant._id.toString());
 
         res.json({ message: 'Plant added to garden', plant });

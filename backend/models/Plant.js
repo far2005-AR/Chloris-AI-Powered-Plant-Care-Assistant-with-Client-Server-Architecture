@@ -7,12 +7,7 @@ const Plant = {
     async create(plantData) {
         const db = getDB();
         const result = await db.collection(this.collection).insertOne(plantData);
-        return result;
-    },
-
-    async findAll() {
-        const db = getDB();
-        return await db.collection(this.collection).find({}).toArray();
+        return result;  
     },
 
     async findById(id) {
@@ -22,42 +17,17 @@ const Plant = {
 
     async findByName(name) {
         const db = getDB();
-        return await db.collection(this.collection).findOne({ name });
+        return await db.collection(this.collection).findOne({ name: name });
     },
 
     async findByNames(names) {
         const db = getDB();
-        if (!Array.isArray(names) || names.length === 0) return [];
-
-        const objectIds = names
-            .filter((value) => typeof value === 'string' && value.length === 24)
-            .map((value) => {
-                try {
-                    return new ObjectId(value);
-                } catch (err) {
-                    return null;
-                }
-            })
-            .filter(Boolean);
-
-        const query = {
-            $or: [
-                { name: { $in: names } },
-                ...(objectIds.length ? [{ _id: { $in: objectIds } }] : [])
-            ]
-        };
-
-        return await db.collection(this.collection).find(query).toArray();
+        return await db.collection(this.collection).find({ _id: { $in: names.map(id => new ObjectId(id)) } }).toArray();
     },
 
-    async search(query) {
+    async findAll() {
         const db = getDB();
-        return await db.collection(this.collection).find({
-            $or: [
-                { name: { $regex: query, $options: 'i' } },
-                { scientific: { $regex: query, $options: 'i' } }
-            ]
-        }).toArray();
+        return await db.collection(this.collection).find({}).toArray();
     }
 };
 

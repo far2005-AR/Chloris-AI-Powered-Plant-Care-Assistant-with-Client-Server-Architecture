@@ -8,6 +8,26 @@ const API_BASE = 'http://localhost:5001/api';
 //     ? 'http://localhost:5001/api' 
 //     : 'https://your-backend-url.com/api';  // for deployment later
 
+// ===== PLANT IMAGE MAPPING =====
+const plantImages = {
+    'Monstera Deliciosa': 'https://images.pexels.com/photos/37486388/pexels-photo-37486388.jpeg',
+    'Monstera': 'https://images.pexels.com/photos/17619301/pexels-photo-17619301.jpeg',
+    'Snake Plant': 'https://images.pexels.com/photos/29218657/pexels-photo-29218657.jpeg',
+    'Aloe Vera': 'https://images.pexels.com/photos/7408838/pexels-photo-7408838.jpeg',
+    'Peace Lily': 'https://images.pexels.com/photos/21656889/pexels-photo-21656889.jpeg',
+    'Pothos': 'https://images.pexels.com/photos/6913641/pexels-photo-6913641.jpeg',
+    'ZZ Plant': 'https://images.pexels.com/photos/10194608/pexels-photo-10194608.jpeg',
+    'Daisy': 'https://images.pexels.com/photos/33342415/pexels-photo-33342415.jpeg',
+    'Rose': 'https://images.pexels.com/photos/18682530/pexels-photo-18682530.png',
+    'Sunflower': 'https://images.pexels.com/photos/34537615/pexels-photo-34537615.jpeg',
+    'Tulip': 'https://images.pexels.com/photos/12018676/pexels-photo-12018676.jpeg',
+    'Dandelion': 'https://images.pexels.com/photos/32054127/pexels-photo-32054127.jpeg',
+};
+
+function getPlantImage(plantName) {
+    return plantImages[plantName] || plantImages['Monstera Deliciosa'] || 'https://images.pexels.com/photos/37486388/pexels-photo-37486388.jpeg';
+}
+
 // ===== SPA NAVIGATION =====
 function navigateTo(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -254,15 +274,21 @@ async function renderGarden() {
             container.innerHTML = data.garden.map(plant => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        <img src="${plant.image || 'assets/plant-placeholder.png'}" alt="${plant.name}" class="profile-event-img">
+                        <img src="${getPlantImage(plant.name)}" alt="${plant.name}" class="profile-event-img">
                         <div class="profile-event-details">
                             <h4>${plant.name}</h4>
-                            <p>🌿 ${plant.scientific || '—'} • ${plant.care?.light || 'Bright indirect light'}</p>
+                            <p>🌿 ${plant.scientific || '—'}</p>
+                            <div class="plant-care-details">
+                                <span>☀️ ${plant.careInfo?.light || 'Bright indirect light'}</span>
+                                <span>💧 ${plant.careInfo?.water || 'Water when soil is dry'}</span>
+                                <span>💨 ${plant.careInfo?.humidity || 'Moderate humidity'}</span>
+                                <span>🌡️ ${plant.careInfo?.temperature || '18-27°C'}</span>
+                            </div>
                         </div>
                     </div>
                     <button class="delete-event-btn" onclick="removePlant('${plant._id}')">🗑️</button>
                 </div>
-            `).join('');
+        `).join('');
         } else {
             container.innerHTML = `
                 <div class="empty-state">
@@ -323,16 +349,16 @@ async function renderRecommendations() {
             container.innerHTML = data.recommendations.map(rec => `
                 <div class="profile-event-card">
                     <div class="profile-event-info">
-                        <img src="${rec.image || 'assets/plant-placeholder.png'}" alt="${rec.name}" class="profile-event-img">
-                        <div class="profile-event-details">
-                            <h4>${rec.name}</h4>
-                            <p>🌿 ${rec.scientific || '—'}</p>
-                            <p style="font-size: 0.7rem; color: #588157;">✨ ${rec.reason || 'Recommended for you'}</p>
-                        </div>
+                        <img src="${getPlantImage(rec.name)}" alt="${rec.name}" class="profile-event-img">
+                    <div class="profile-event-details">
+                        <h4>${rec.name}</h4>
+                        <p>🌿 ${rec.scientific || '—'}</p>
+                        <p style="font-size: 0.7rem; color: #588157;">✨ ${rec.reason || 'Recommended for you'}</p>
                     </div>
-                    <button class="delete-event-btn" onclick="alert('Add to garden?')">🌱</button>
-                </div>
-            `).join('');
+                 </div>
+                <button class="delete-event-btn" onclick="alert('Add to garden?')">🌱</button>
+            </div>
+        `).join('');
         } else {
             container.innerHTML = `
                 <div class="empty-state">

@@ -32,6 +32,7 @@ AI-powered plant care assistant with client-server architecture.
    PORT=5001
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_secret_key
+   GEMINI_API_KEY=your_gemini_key
 
 4. Start the server:
    node server.js
