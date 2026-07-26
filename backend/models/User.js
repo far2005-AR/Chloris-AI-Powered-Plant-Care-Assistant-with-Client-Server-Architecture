@@ -5,9 +5,14 @@ const User = {
     collection: 'users',
 
     async create(userData) {
-        const db = getDB();
-        const result = await db.collection(this.collection).insertOne(userData);
-        return result;
+    const db = getDB();
+    const user = {
+        ...userData,
+        garden: [],  
+        createdAt: new Date()
+    };
+    const result = await db.collection(this.collection).insertOne(user);
+    return result;
     },
 
     async findByEmail(email) {
