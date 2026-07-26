@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // create user
-        const user = {
+        const userData = {
             name,
             email,
             password: hashedPassword,
@@ -27,15 +27,21 @@ router.post('/signup', async (req, res) => {
             createdAt: new Date()
         };
 
-        await User.create(user);
+        const result = await User.create(userData);
+        
+        // fetch the user with _id
+        const user = await User.findById(result.insertedId);
 
-        // generate JWT
-        const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign(
+            { email: user.email, userId: user._id.toString() },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
 
         res.status(201).json({
             message: 'User created successfully',
             token,
-            user: { name, email }
+            user: { id: user._id, name: user.name, email: user.email, garden: user.garden }
         });
 
     } catch (error) {
